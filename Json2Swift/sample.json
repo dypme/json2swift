@@ -1,0 +1,15 @@
+{
+    "id": 8,
+    "sort_as": false,
+    "gloss_term": "Standard Generalized Markup Language",
+    "acronym": "SGML",
+    "abbrev": 9.12,
+    "gloss_def": {
+        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+        "gloss_see_also": ["GML", "XML"]
+    },
+    "GlossSee": "markup",
+    "glossary": {
+        "title": "example glossary"
+    }
+}
