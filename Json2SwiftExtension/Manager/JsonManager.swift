@@ -17,7 +17,10 @@ class JsonManager {
     private let codable = CodableManager()
     
     func parseJson(object: ClassObject, format: JsonFormatType) -> String {
-        let results = parseJsonSeparated(object: object, format: format)
+        var results = parseJsonSeparated(object: object, format: format)
+        if format == .swiftyJson {
+            results.insert("import SwiftyJSON", at: 0)
+        }
         return results.joined(separator: "\n\n")
     }
     

@@ -22,11 +22,7 @@ struct \(className): Codable {
     }
     
     private func parseProperties(_ data: [String : Any]) -> String {
-        var result = ""
-        data.forEach { (key, value) in
-            result.append(formatProperty(key: key, value: value))
-            result.append("\n")
-        }
+        let result = data.sorted(by: { $0.key.lowercased() < $1.key.lowercased() }).map({ formatProperty(key: $0.key, value: $0.value) }).joined(separator: "\n")
         return result
     }
     
@@ -37,53 +33,51 @@ struct \(className): Codable {
         let type = JsonType(value)
         switch type {
         case .bool:
-            return "    let \(name): Bool?"
+            return "\tlet \(name): Bool?"
         case .integer:
-            return "    let \(name): Int?"
+            return "\tlet \(name): Int?"
         case .double:
-            return "    let \(name): Double?"
+            return "\tlet \(name): Double?"
         case .object:
-            return "    let \(name): \(cName)?"
+            return "\tlet \(name): \(cName)?"
         case .array:
             if let arrayValue = (value as? [Any])?.first {
                 let arrayValueType = JsonType(arrayValue)
                 if let _ = arrayValue as? [String : Any] {
-                    return "    let \(name): [\(cName)]?"
+                    return "\tlet \(name): [\(cName)]?"
                 } else if let typeData = arrayValueType.typeData {
-                    return "    let \(name): [\(typeData)]?"
+                    return "\tlet \(name): [\(typeData)]?"
                 }
             }
-            return "    let \(name): [Any]?"
+            return "\tlet \(name): [Any]?"
         default:
-            return "    let \(name): String?"
+            return "\tlet \(name): String?"
         }
     }
     
     private func codingKeys(_ data: [String : Any]) -> String {
-        var keys = ""
+        var keys = [String]()
         data.forEach { (key, value) in
             let propertyName = JsonManager.propertyName(fromKey: key)
-            keys.append("       case \(propertyName) = \"\(key)\"")
-            keys.append("\n")
+            keys.append("\t\tcase \(propertyName) = \"\(key)\"")
         }
         return """
-    enum CodingKeys: String, CodingKey {
-\(keys)
-    }
+\tenum CodingKeys: String, CodingKey {
+\(keys.joined(separator: "\n"))
+\t}
 """
     }
     
     private func parser(_ data: [String : Any]) -> String {
-        var propertiesParserResult = ""
+        var propertiesParserResult = [String]()
         data.forEach { (key, value) in
             propertiesParserResult.append(formatPropertyParser(key: key, value: value))
-            propertiesParserResult.append("\n")
         }
         return """
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-\(propertiesParserResult)
-    }
+\tinit(from decoder: Decoder) throws {
+\t\tlet values = try decoder.container(keyedBy: CodingKeys.self)
+\(propertiesParserResult.joined(separator: "\n"))
+\t}
 """
     }
     
@@ -94,19 +88,19 @@ struct \(className): Codable {
         let type = JsonType(value)
         switch type {
         case .bool, .integer, .double, .string:
-            return "        \(name) = try values.decodeIfPresent(\(type.typeData!).self, forKey: .\(name))"
+            return "\t\t\(name) = try values.decodeIfPresent(\(type.typeData!).self, forKey: .\(name))"
         case .object:
-            return "        \(name) = try values.decodeIfPresent(\(cName).self, forKey: .\(name))"
+            return "\t\t\(name) = try values.decodeIfPresent(\(cName).self, forKey: .\(name))"
         case .array:
             if let arrayValue = (value as? [Any])?.first {
                 let arrayValueType = JsonType(arrayValue)
                 if let _ = arrayValue as? [String : Any] {
-                    return "        \(name) = try values.decodeIfPresent([\(cName)].self, forKey: .\(name))"
+                    return "\t\t\(name) = try values.decodeIfPresent([\(cName)].self, forKey: .\(name))"
                 } else if let typeData = arrayValueType.typeData {
-                    return "        \(name) = try values.decodeIfPresent([\(typeData)].self, forKey: .\(name))"
+                    return "\t\t\(name) = try values.decodeIfPresent([\(typeData)].self, forKey: .\(name))"
                 }
             }
-            return "        \(name) = try values.decodeIfPresent([Any].self, forKey: .\(name))"
+            return "\t\(name) = try values.decodeIfPresent([Any].self, forKey: .\(name))"
         }
     }
 }

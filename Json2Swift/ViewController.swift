@@ -58,6 +58,8 @@ class ViewController: NSViewController {
         exampleBtn.action = #selector(setExample)
         copyResultBtn.target = self
         copyResultBtn.action = #selector(copyResult)
+        jsonFormatParserBtn.target = self
+        jsonFormatParserBtn.action = #selector(updateJsonResult)
     }
     
     // MARK: Action
@@ -89,7 +91,7 @@ class ViewController: NSViewController {
         NSWorkspace.shared.open(URL(string: url)!)
     }
     
-    func updateJsonResult() {
+    @objc func updateJsonResult() {
         let jsonString = jsonView.string
         let format = jsonFormatParserBtn.selectedItem?.identifier?.rawValue ?? ""
         do {

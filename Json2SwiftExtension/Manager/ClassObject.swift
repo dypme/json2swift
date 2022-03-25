@@ -16,13 +16,15 @@ enum JsonType {
     case object
     
     init(_ value: Any) {
-        if value is Bool {
-            self = .bool
-        } else if value is NSNumber {
-            if String(describing: value).contains(".") {
-                self = .double
+        if let number = value as? NSNumber {
+            if number.isBool {
+                self = .bool
             } else {
-                self = .integer
+                if String(describing: value).contains(".") {
+                    self = .double
+                } else {
+                    self = .integer
+                }
             }
         } else if value is [Any] {
             self = .array
@@ -78,6 +80,22 @@ class ClassObject {
                 return ClassObject(className: name, data: child)
             }
             return nil
+        }
+    }
+}
+
+private let trueNumber = NSNumber(value: true)
+private let falseNumber = NSNumber(value: false)
+private let trueObjCType = String(cString: trueNumber.objCType)
+private let falseObjCType = String(cString: falseNumber.objCType)
+
+extension NSNumber {
+    fileprivate var isBool: Bool {
+        let objCType = String(cString: self.objCType)
+        if (self.compare(trueNumber) == .orderedSame && objCType == trueObjCType) || (self.compare(falseNumber) == .orderedSame && objCType == falseObjCType) {
+            return true
+        } else {
+            return false
         }
     }
 }
