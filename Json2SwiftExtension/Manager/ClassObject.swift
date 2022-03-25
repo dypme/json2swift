@@ -54,8 +54,7 @@ class ClassObject {
     private(set) var data = [String : Any]()
     
     init(data: [String : Any]) {
-        let rootModelName = JsonManager.rootClassName ?? ""
-        self.name = rootModelName.isEmpty ? "Datum" : rootModelName
+        self.name = "Datum"
         self.data = data
     }
     
