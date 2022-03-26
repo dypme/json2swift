@@ -49,7 +49,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         self.buffer.lines.removeObjects(in: NSRange(location: startLine, length: endLine))
         
         let formatType = JsonFormatType(rawValue: identifier)!
-        self.buffer.lines.insert(manager.parseJson(object: object, format: formatType), at: range.start.line)
+        let result = manager.parseJsonString(object: object, format: formatType)
+        self.buffer.lines.insert(result, at: range.start.line)
         
         let selection = XCSourceTextRange(start: XCSourceTextPosition(line: 0, column: 0), end: XCSourceTextPosition(line: 0, column: 0))
         self.buffer.selections.removeAllObjects()

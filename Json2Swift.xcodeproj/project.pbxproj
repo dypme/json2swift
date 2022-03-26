@@ -27,6 +27,7 @@
 		23D533DB26FC6F1E00F80C33 /* Json2SwiftExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 23D533CC26FC6F1E00F80C33 /* Json2SwiftExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		23D533E226FC6F2500F80C33 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D533D026FC6F1E00F80C33 /* XcodeKit.framework */; };
 		23D533E326FC6F2500F80C33 /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 23D533D026FC6F1E00F80C33 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E25A221227EEABC70038F6EF /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A221127EEABC70038F6EF /* ResultCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		23D533D526FC6F1E00F80C33 /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
 		23D533D726FC6F1E00F80C33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23D533D826FC6F1E00F80C33 /* Json2SwiftExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Json2SwiftExtension.entitlements; sourceTree = "<group>"; };
+		E25A221127EEABC70038F6EF /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			children = (
 				23D533B726FC6C6C00F80C33 /* AppDelegate.swift */,
 				23D533B926FC6C6C00F80C33 /* ViewController.swift */,
+				E25A221127EEABC70038F6EF /* ResultCell.swift */,
 				236761D126FF3A7C00700F18 /* Model.swift */,
 				23C4A47026FEB2FC006C330E /* sample.json */,
 				23D533BB26FC6C6E00F80C33 /* Assets.xcassets */,
@@ -276,6 +279,7 @@
 			files = (
 				236761D226FF3A7C00700F18 /* Model.swift in Sources */,
 				2367FEBF2701575500FB70A3 /* SwiftyManager.swift in Sources */,
+				E25A221227EEABC70038F6EF /* ResultCell.swift in Sources */,
 				2367FEC427015ACE00FB70A3 /* CodableManager.swift in Sources */,
 				236761CE26FF2F2C00700F18 /* ClassObject.swift in Sources */,
 				236761CF26FF2F2C00700F18 /* JsonManager.swift in Sources */,
@@ -449,6 +453,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dypme.Json2Swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -470,6 +476,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dypme.Json2Swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -489,6 +497,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dypme.Json2Swift.Json2SwiftExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -509,6 +518,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dypme.Json2Swift.Json2SwiftExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

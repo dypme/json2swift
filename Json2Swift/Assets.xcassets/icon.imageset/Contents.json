@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "ic_ko_fi.png",
+      "filename" : "128.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_ko_fi@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ic_ko_fi@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

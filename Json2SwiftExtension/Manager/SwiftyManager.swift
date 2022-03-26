@@ -10,6 +10,8 @@ import Foundation
 class SwiftyManager {
     func parse(className: String, data: [String : Any]) -> String {
         let result = """
+import SwiftyJSON
+
 class \(className): NSObject {
 \(parseProperties(data))
 

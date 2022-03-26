@@ -13,8 +13,11 @@ class ViewController: NSViewController {
     @IBOutlet weak var jsonView: NSTextView!
     @IBOutlet weak var errorLabel: NSTextField!
     @IBOutlet weak var exampleBtn: NSButton!
-    @IBOutlet weak var resultView: NSTextView!
+    @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var copyResultBtn: NSButton!
+    
+    private var results = [String]()
+    private var resultString = String()
     
     let manager = JsonManager()
     
@@ -37,19 +40,14 @@ class ViewController: NSViewController {
         jsonView.isAutomaticDashSubstitutionEnabled = false
         jsonView.isAutomaticSpellingCorrectionEnabled = false
         
-        jsonView.font = NSFont.systemFont(ofSize: 15)
+        jsonView.font = NSFont.systemFont(ofSize: 14)
+        jsonView.wantsLayer = true
+        jsonView.layer?.cornerRadius = 5
     }
     
     func setupResultView() {
-        resultView.isAutomaticQuoteSubstitutionEnabled = false
-        resultView.isAutomaticDataDetectionEnabled = false
-        resultView.isAutomaticLinkDetectionEnabled = false
-        resultView.isAutomaticTextCompletionEnabled = false
-        resultView.isAutomaticTextReplacementEnabled = false
-        resultView.isAutomaticDashSubstitutionEnabled = false
-        resultView.isAutomaticSpellingCorrectionEnabled = false
-        
-        resultView.font = NSFont.systemFont(ofSize: 15)
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     func setupMethod() {
@@ -77,8 +75,7 @@ class ViewController: NSViewController {
     @objc func copyResult() {
         let psb = NSPasteboard.general
         psb.clearContents()
-        psb.setString(resultView.string, forType: .string)
-        alertView(message: "Successfully copied to clipboard")
+        psb.setString(resultString, forType: .string)
     }
     
     @objc func openKofi() {
@@ -94,6 +91,7 @@ class ViewController: NSViewController {
     @objc func updateJsonResult() {
         let jsonString = jsonView.string
         let format = jsonFormatParserBtn.selectedItem?.identifier?.rawValue ?? ""
+        let jsonFormat = JsonFormatType(rawValue: format)!
         do {
             guard let data = jsonString.data(using: .utf8) else { return }
             guard let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else {
@@ -101,7 +99,10 @@ class ViewController: NSViewController {
             }
             
             let object = ClassObject(data: dict)
-            resultView.string = manager.parseJson(object: object, format: JsonFormatType(rawValue: format)!)
+            results = manager.parseJson(object: object, format: jsonFormat)
+            resultString = manager.parseJsonString(object: object, format: jsonFormat)
+            
+            tableView.reloadData()
             errorLabel.isHidden = true
         } catch {
             errorLabel.stringValue = error.localizedDescription
@@ -121,6 +122,18 @@ class ViewController: NSViewController {
 extension ViewController: NSTextViewDelegate {
     func textDidChange(_ notification: Notification) {
         updateJsonResult()
+    }
+}
+
+extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        results.count
+    }
+    
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "cell"), owner: self) as? ResultCell else { return nil }
+        cell.resultLabel.stringValue = results[row]
+        return cell
     }
 }
 
