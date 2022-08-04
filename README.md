@@ -1,16 +1,16 @@
 # Json2Swift
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/dypme/json2swift/blob/main/LICENSE)
-![Xcode](https://img.shields.io/badge/Tested-Xcode%2012%2F13-blue)
+[![GitHub Release](https://img.shields.io/github/release/dypme/json2swift.svg?style=flat)](https://github.com/dypme/json2swift/releases)
+![Xcode](https://img.shields.io/badge/tested-Xcode%2013-blue)
 ![MacOS](https://img.shields.io/badge/platform-macos-lightgrey)
 
 Json2Swift is Xcode Extension used for generate Swift model with format Codable or [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) from JSON format
 
 ## Installation
-1. Download/ Clone this repo on Your computer
-2. Run the project in Xcode
+Clone this repo and build Your own or Download app from [release](https://github.com/dypme/json2swift/releases)
 
-## Xcode Extension
+## Enable Xcode Extension
 1. Open System Preference
 2. Select Extensions
 3. Select Xcode Source Editor
@@ -18,17 +18,18 @@ Json2Swift is Xcode Extension used for generate Swift model with format Codable 
 5. Restart Xcode
 
 ## How to Use
-You can use the app from running the project or archive it<br>
+### Using app
+
+### Using Extension
+- Xcode Editor Menu > Json2Swift > Select generate type You want
+
+### Setup shortcut extension
+1. Open Xcode > Preferences...
+2. Go to menu Key Bindings
+3. Search/ filter 'Json2Swift'
+4. Create Your shortcut  
+
+## Screenshot
 <img src="https://raw.githubusercontent.com/dypme/json2swift/main/images/app.png" alt="Json2Swift" title="Json2Swift" width="557"/><br><br>
-
-On Xcode You can use it on Editor Menu > Json2Swift<br>
 <img src="https://raw.githubusercontent.com/dypme/json2swift/main/images/demo.gif" alt="Json2Swift" title="Json2Swift" width="600"/><br><br>
-
-You can also add shortcut on Xcode Preferences > Key Bindings > Filter "Json2Swift"<br>
-<img src="https://raw.githubusercontent.com/dypme/json2swift/main/images/keys.png" alt="Json2Swift" title="Json2Swift" width="557"/><br><br>
-
-NB: If You change root class name in app, it also affect when using from menu Editor or shortcut
-
-## Thanks to
-- [Json2Property](https://github.com/keepyounger/Json2Property)
-- [JSON Cafe](http://www.jsoncafe.com/)
+<img src="https://raw.githubusercontent.com/dypme/json2swift/main/images/keys.png" alt="Json2Swift" title="Json2Swift" width="557"/>
