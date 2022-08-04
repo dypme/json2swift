@@ -29,7 +29,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                 let object = ClassObject(data: dict)
                 output(object: object, identifier: invocation.commandIdentifier)
             } catch {
-                
+                let errorResult = "// \(error.localizedDescription)\n\(jsonString ?? "")"
+                outputResult(text: errorResult)
             }
         }
         
@@ -37,6 +38,12 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     }
     
     func output(object: ClassObject, identifier: String) {
+        let formatType = JsonFormatType(rawValue: identifier)!
+        let result = manager.parseJsonString(object: object, format: formatType)
+        outputResult(text: result)
+    }
+    
+    func outputResult(text: String) {
         guard let range = self.buffer.selections.firstObject as? XCSourceTextRange else { return }
         let startLine = range.start.line
         var endLine = range.end.line - range.start.line + 1
@@ -47,10 +54,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         }
         
         self.buffer.lines.removeObjects(in: NSRange(location: startLine, length: endLine))
-        
-        let formatType = JsonFormatType(rawValue: identifier)!
-        let result = manager.parseJsonString(object: object, format: formatType)
-        self.buffer.lines.insert(result, at: range.start.line)
+        self.buffer.lines.insert(text, at: range.start.line)
         
         let selection = XCSourceTextRange(start: XCSourceTextPosition(line: 0, column: 0), end: XCSourceTextPosition(line: 0, column: 0))
         self.buffer.selections.removeAllObjects()
